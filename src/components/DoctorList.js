@@ -1,64 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 
-const DoctorList = () => {
-  const [doctors, setDoctors] = useState([]); // start empty
+const DoctorList = ({ doctors }) => {
+  if (!doctors || doctors.length === 0) {
+    return <p style={{ color: "#666" }}>No doctors found for this department.</p>;
+  }
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2 style={{ color: "#004aad", marginBottom: "1rem" }}>Doctor List</h2>
+    <div>
+      <h2 style={{ color: "#004aad" }}>Doctors</h2>
 
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          border: "1px solid #ddd",
-        }}
-      >
-        <thead style={{ backgroundColor: "#f5f5f5" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 8 }}>
+        <thead style={{ background: "#f5f7fb" }}>
           <tr>
-            <th style={thStyle}>Doctor ID</th>
-            <th style={thStyle}>Name</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>Contact Number</th>
-            <th style={thStyle}>License Number</th>
-            <th style={thStyle}>Specialty</th>
+            <th style={th}>ID</th>
+            <th style={th}>Name</th>
+            <th style={th}>Specialization</th>
+            <th style={th}>Email</th>
+            <th style={th}>Phone</th>
+            <th style={th}>Dept ID</th>
           </tr>
         </thead>
-
         <tbody>
-          {doctors.length === 0 ? (
-            <tr>
-              <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>
-                No doctors added yet.
-              </td>
+          {doctors.map(doc => (
+            <tr key={doc.id}>
+              <td style={td}>{doc.id}</td>
+              <td style={td}>{doc.name}</td>
+              <td style={td}>{doc.specialization}</td>
+              <td style={td}>{doc.email}</td>
+              <td style={td}>{doc.phone}</td>
+              <td style={td}>{doc.dept_id}</td>
             </tr>
-          ) : (
-            doctors.map((doc) => (
-              <tr key={doc.id}>
-                <td style={tdStyle}>{doc.id}</td>
-                <td style={tdStyle}>{doc.name}</td>
-                <td style={tdStyle}>{doc.email}</td>
-                <td style={tdStyle}>{doc.contact}</td>
-                <td style={tdStyle}>{doc.license}</td>
-                <td style={tdStyle}>{doc.specialty}</td>
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-const thStyle = {
-  padding: "10px",
-  borderBottom: "1px solid #ddd",
-  textAlign: "left",
-};
-
-const tdStyle = {
-  padding: "10px",
-  borderBottom: "1px solid #ddd",
-};
+const th = { textAlign: "left", padding: "10px", borderBottom: "1px solid #e6e6e6" };
+const td = { padding: "8px 10px", borderBottom: "1px solid #f0f0f0" };
 
 export default DoctorList;

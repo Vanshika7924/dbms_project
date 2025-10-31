@@ -1,70 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 
-const DepartmentList = () => {
-  const [departments, setDepartments] = useState([]); // start empty
-
+const DepartmentList = ({ departments, onSelect }) => {
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2 style={{ color: "#004aad", marginBottom: "1rem" }}>Department List</h2>
-
-      <table
+    <div style={{ padding: "2rem", fontFamily: "Segoe UI, Arial, sans-serif" }}>
+      {/* 🔹 Header Section */}
+      <header
         style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          border: "1px solid #ddd",
+          backgroundColor: "#004aad",
+          color: "white",
+          padding: "1rem 2rem",
+          borderRadius: "8px",
+          marginBottom: "1.5rem",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
         }}
       >
-        <thead style={{ backgroundColor: "#f5f5f5" }}>
-          <tr>
-            <th style={thStyle}>Department ID</th>
-            <th style={thStyle}>Department Name</th>
-            <th style={thStyle}>Head of Department</th>
-            <th style={thStyle}>Doctor ID</th>
-            <th style={thStyle}>Doctor Name</th>
-            <th style={thStyle}>Contact Number</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>Room Number</th>
-            <th style={thStyle}>Number of Staff</th>
-          </tr>
-        </thead>
+        <h1 style={{ margin: 0 }}>🏥 Department Dashboard</h1>
+        <p style={{ margin: "6px 0 0", fontSize: "0.95rem", color: "#e0e0e0" }}>
+          View and select departments to see available doctors.
+        </p>
+      </header>
 
-        <tbody>
-          {departments.length === 0 ? (
-            <tr>
-              <td colSpan="9" style={{ textAlign: "center", padding: "1rem" }}>
-                No departments added yet.
-              </td>
-            </tr>
-          ) : (
-            departments.map((dept) => (
-              <tr key={dept.id}>
-                <td style={tdStyle}>{dept.id}</td>
-                <td style={tdStyle}>{dept.name}</td>
-                <td style={tdStyle}>{dept.hod}</td>
-                <td style={tdStyle}>{dept.doctorId}</td>
-                <td style={tdStyle}>{dept.doctorName}</td>
-                <td style={tdStyle}>{dept.contact}</td>
-                <td style={tdStyle}>{dept.email}</td>
-                <td style={tdStyle}>{dept.room}</td>
-                <td style={tdStyle}>{dept.staffCount}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+      {/* 🔹 Department List Section */}
+      <h2 className="text-xl font-semibold mb-3">Departments</h2>
+      <ul className="space-y-2">
+        {departments.length === 0 ? (
+          <p style={{ color: "#777" }}>No departments found.</p>
+        ) : (
+          departments.map((dept) => (
+            <li
+              key={dept.id}
+              onClick={() => onSelect(dept.id)}
+              style={{
+                padding: "12px 16px",
+                border: "1px solid #ddd",
+                borderRadius: "6px",
+                cursor: "pointer",
+                backgroundColor: "#fafafa",
+                transition: "background 0.3s",
+                marginBottom: "8px",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.background = "#f0f8ff")}
+              onMouseOut={(e) => (e.currentTarget.style.background = "#fafafa")}
+            >
+              {dept.name}
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
-};
-
-const thStyle = {
-  padding: "10px",
-  borderBottom: "1px solid #ddd",
-  textAlign: "left",
-};
-
-const tdStyle = {
-  padding: "10px",
-  borderBottom: "1px solid #ddd",
 };
 
 export default DepartmentList;
